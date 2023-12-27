@@ -25,34 +25,62 @@ function createPlayer (number, marker) {
     return { playerNumber, playerMarker };
 };
 
-function createGame (playerA, playerB, currentBoard) {
+function playGame (playerA, playerB, board) {
     for (let i=0;i<9;i++) {
-
-        if (currentBoard.board[2] == 'X') {
-            console.log("yes");
-        }
-        
-
+        let index;
+        let playerTurn;
         if (i % 2 == 0) {
-            let index = prompt(`Player ${playerA.playerNumber} enter an index: `);
-            while (currentBoard.board[index] !== ' '){
+            index = prompt(`Player ${playerA.playerNumber} enter an index: `);
+            while (board[index] !== ' '){
                 index = prompt(`Player ${playerA.playerNumber} enter an index: `);
             };
-            currentBoard.board[index] = playerA.playerMarker;
+            board[index] = playerA.playerMarker;
+            playerTurn = playerA;
 
         } else {
-            let index = prompt(`Player ${playerB.playerNumber} enter an index: `);
-            while (currentBoard.board[index] !== ' '){
+            index = prompt(`Player ${playerB.playerNumber} enter an index: `);
+            while (board[index] !== ' '){
                 index = prompt(`Player ${playerB.playerNumber} enter an index: `);
             };
-            currentBoard.board[index] = playerB.playerMarker;
+            board[index] = playerB.playerMarker;
+            playerTurn = playerB;
         };
 
-        currentBoard.printBoard();
+        Gameboard.printBoard();
 
-    }
+        if (i >= 4) {
+            if (
+                board[0] === board[1] && board[1] === board[2] && board[2] !== ' ' ||
+                board[3] === board[4] && board[4] === board[5] && board[5] !== ' ' || 
+                board[6] === board[7] && board[7] === board[8] && board[8] !== ' ' ||
+                board[0] === board[3] && board[3] === board[6] && board[6] !== ' ' ||
+                board[1] === board[4] && board[4] === board[7] && board[7] !== ' ' ||
+                board[2] === board[5] && board[5] === board[8] && board[8] !== ' ' ||
+                board[0] === board[4] && board[4] === board[8] && board[8] !== ' ' ||
+                board[2] === board[4] && board[4] === board[6] && board[6] !== ' ' 
+            )  {
+                console.log(`Winner! Player ${playerTurn.playerNumber} has won the game!`);
+                return;
+            }
+        };
+
+
+
+    };
+    console.log("It's a tie!");
 };
 
 const player1 = createPlayer(1, 'X');
 const player2 = createPlayer(2, 'O');
-createGame(player1, player2, Gameboard);
+
+while (true) {
+    playGame(player1, player2, Gameboard.board);
+    let replay = prompt("Would you like to play again? Enter Y for yes or N for no.")
+    if (replay === 'n' || replay === 'N'){
+        break;
+    } else {
+        for (let i=0;i<9;i++){
+            Gameboard.board[i] = ' ';
+        }
+    }
+};
