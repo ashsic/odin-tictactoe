@@ -17,29 +17,12 @@ const Gameboard = (function () {
 
 })();
 
-
 function createPlayer (number, marker) {
     const playerNumber = number;
     const playerMarker = marker;
 
     return { playerNumber, playerMarker };
 };
-
-
-
-
-// while (true) {
-//     playGame(player1, player2, Gameboard.board);
-//     let replay = prompt("Would you like to play again? Enter Y for yes or N for no.")
-//     if (replay === 'n' || replay === 'N'){
-//         break;
-//     } else {
-//         for (let i=0;i<9;i++){
-//             Gameboard.board[i] = ' ';
-//         };
-//     };
-// };
-
 
 const displayController = (function () {
 
@@ -61,17 +44,17 @@ const displayController = (function () {
         const squareClickHandler = (event) => {
         
             if (i % 2 == 1) {
-                narrator.textContent = "Player 1 turn:";
+                narrator.textContent = "Player 1 turn";
                 playerTurn = playerB;
                 board[event.target.getAttribute('id') - 1] = playerB.playerMarker;
             } else {
-                narrator.textContent = "Player 2 turn:";
+                narrator.textContent = "Player 2 turn";
                 playerTurn = playerA;
                 board[event.target.getAttribute('id') - 1] = playerA.playerMarker;
             };
     
             updateBoard();
-            Gameboard.printBoard();
+            //Gameboard.printBoard();
     
             if (i >= 4) {
                 if (
@@ -84,14 +67,14 @@ const displayController = (function () {
                     board[0] === board[4] && board[4] === board[8] && board[8] !== ' ' ||
                     board[2] === board[4] && board[4] === board[6] && board[6] !== ' ' 
                 )  {
-                    narrator.textContent = `Winner! Player ${playerTurn.playerNumber} has won the game!`;
+                    narrator.textContent = `Player ${playerTurn.playerNumber} wins!`;
                     gameOver = true;
                     htmlBoard.forEach((square) => {
                         square.removeEventListener('click', squareClickHandler);
                     });
                 };
             };
-            if (i === 9) narrator.textContent = "It's a tie!";
+            if (i === 8) narrator.textContent = "It's a tie!";
             i++;
             event.target.removeEventListener('click', squareClickHandler);
         };
@@ -127,9 +110,6 @@ const displayController = (function () {
 
     return { htmlBoard, updateBoard, startGame, playGame };
 })();
-
-
-
 
 const player1 = createPlayer(1, 'X');
 const player2 = createPlayer(2, 'O');
