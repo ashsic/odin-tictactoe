@@ -73,14 +73,26 @@ function playGame (playerA, playerB, board) {
 const player1 = createPlayer(1, 'X');
 const player2 = createPlayer(2, 'O');
 
-while (true) {
-    playGame(player1, player2, Gameboard.board);
-    let replay = prompt("Would you like to play again? Enter Y for yes or N for no.")
-    if (replay === 'n' || replay === 'N'){
-        break;
-    } else {
-        for (let i=0;i<9;i++){
-            Gameboard.board[i] = ' ';
-        }
-    }
-};
+// while (true) {
+//     playGame(player1, player2, Gameboard.board);
+//     let replay = prompt("Would you like to play again? Enter Y for yes or N for no.")
+//     if (replay === 'n' || replay === 'N'){
+//         break;
+//     } else {
+//         for (let i=0;i<9;i++){
+//             Gameboard.board[i] = ' ';
+//         };
+//     };
+// };
+
+
+const displayController = (function () {
+    const updateBoard = () => {
+        let displayBoard = document.querySelectorAll(".square");
+        displayBoard.forEach((square) => {
+            square.textContent = Gameboard.board[square.id + 1];
+        });
+    };
+
+    return { updateBoard }
+})();
