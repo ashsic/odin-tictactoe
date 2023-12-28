@@ -41,6 +41,15 @@ header p {
     width: 160px;
     height: 160px;
     border: 2px solid white;
+    font-size: 96px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.square > p {
+    padding-bottom: 8px;
+
 }
 
 .game-container {
